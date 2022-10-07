@@ -1,7 +1,8 @@
 import { Client, Execution, ExecutionList, FunctionsClient, FunctionsList, Tag, TagList, Vars } from "../appwrite";
 import { AppwriteSDK } from '../constants';
 import AppwriteCall from '../utils/AppwriteCall';
-import { ReadStream } from 'node:fs';
+import * as fs from 'fs';
+import { ReadStream } from 'fs';
 
 export class Functions {
     public readonly functions: FunctionsClient;

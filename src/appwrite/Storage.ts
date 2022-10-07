@@ -1,4 +1,5 @@
-import { ReadStream } from 'node:fs';
+import * as fs from 'fs';
+import { ReadStream } from 'fs';
 import { Client, FilesList, StorageClient } from "../appwrite";
 import { AppwriteSDK } from '../constants';
 import AppwriteCall from "../utils/AppwriteCall";
