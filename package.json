@@ -28,7 +28,7 @@
         "onCommand:vscode-appwrite.Connect",
         "onView:Appwrite",
         "onView:Users",
-        "onView:Database",
+        "onView:Databases",
         "onView:Health",
         "onView:Functions",
         "onCommand:vscode-appwrite.AddProject",
@@ -348,8 +348,8 @@
                     "name": "Users"
                 },
                 {
-                    "id": "Database",
-                    "name": "Database"
+                    "id": "Databases",
+                    "name": "Databases"
                 },
                 {
                     "id": "Storage",
@@ -388,7 +388,7 @@
                 },
                 {
                     "command": "vscode-appwrite.OpenDatabaseDocumentation",
-                    "when": "view == Database",
+                    "when": "view == Databases",
                     "group": "navigation"
                 },
                 {
@@ -403,12 +403,12 @@
                 },
                 {
                     "command": "vscode-appwrite.refreshCollectionsList",
-                    "when": "view == Database",
+                    "when": "view == Databases",
                     "group": "navigation"
                 },
                 {
                     "command": "vscode-appwrite.createCollection",
-                    "when": "view == Database",
+                    "when": "view == Databases",
                     "group": "navigation"
                 },
                 {
@@ -738,19 +738,21 @@
     "scripts": {
         "vscode:prepublish": "npm run package",
         "compile": "webpack",
-        "watch": "webpack --watch",
+        "watch": "webpack --mode development --watch",
         "package": "webpack --mode production --devtool hidden-source-map",
         "test-compile": "tsc -p ./",
         "test-watch": "tsc -watch -p ./",
         "pretest": "npm run test-compile && npm run lint",
         "lint": "eslint src --ext ts",
-        "test": "node ./out/test/runTest.js"
+        "test": "node ./out/test/runTest.js",
+        "webpack": "webpack --mode development",
+        "webpack-dev": "webpack --mode development --watch"
     },
     "devDependencies": {
         "@types/fs-extra": "^9.0.11",
         "@types/glob": "^7.1.3",
         "@types/mocha": "^8.0.4",
-        "@types/node": "^12.11.7",
+        "@types/node": "^12.20.55",
         "@types/tar": "^4.0.4",
         "@types/vscode": "^1.55.0",
         "@typescript-eslint/eslint-plugin": "^4.14.1",
@@ -758,19 +760,20 @@
         "eslint": "^7.19.0",
         "glob": "^7.1.6",
         "mocha": "^8.2.1",
-        "ts-loader": "^8.0.14",
+        "ts-loader": "^8.4.0",
         "typescript": "^4.1.3",
         "vsce": "^1.88.0",
         "vscode-test": "^1.5.0",
-        "webpack": "^5.19.0",
-        "webpack-cli": "^4.4.0"
+        "webpack": "^5.74.0",
+        "webpack-cli": "^4.10.0"
     },
     "dependencies": {
         "cron-validate": "^1.4.3",
         "cronstrue": "^1.113.0",
         "dayjs": "^1.10.4",
         "fs-extra": "^9.1.0",
-        "node-appwrite": "^2.2.3",
+        "node-appwrite": "^8.1.0",
+        "node-polyfill-webpack-plugin": "^2.0.1",
         "tar": "^6.1.0"
     }
 }

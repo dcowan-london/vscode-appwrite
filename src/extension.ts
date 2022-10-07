@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { createAppwriteClient } from "./client";
+import { activateTag } from "./commands/functions/activateTag";
 import { registerCommands } from "./commands/registerCommands";
 import { ext } from "./extensionVariables";
 import { getActiveProjectConfiguration } from "./settings";

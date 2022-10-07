@@ -11,10 +11,10 @@ export async function deleteCollection(collectionTreeItem: CollectionTreeItem): 
     try {
         const shouldDelete = await confirmDialog(`Delete collection "${collection.name}"?`);
         if (shouldDelete) {
-            await databaseClient.deleteCollection(collection.$id);
+            await databaseClient.deleteCollection(collection.$database, collection.$id);
             window.showInformationMessage(`Deleted collection "${collection.name}".`);
         }
-    } catch (e) {
+    } catch (e: any) {
         window.showErrorMessage(e);
     }
 }

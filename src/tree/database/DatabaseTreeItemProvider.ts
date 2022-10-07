@@ -3,6 +3,7 @@ import { client } from "../../client";
 import AppwriteCall from "../../utils/AppwriteCall";
 import { Collection, CollectionsList } from "../../appwrite";
 import { CollectionTreeItem } from "./CollectionTreeItem";
+import { DatabaseTreeItem } from "./DatabaseTreeItem";
 import { AppwriteSDK } from "../../constants";
 import { ext } from '../../extensionVariables';
 import { AppwriteTreeItemBase } from '../../ui/AppwriteTreeItemBase';
@@ -37,17 +38,27 @@ export class DatabaseTreeItemProvider implements vscode.TreeDataProvider<vscode.
             return await parent.getChildren?.() ?? [];
         }
 
-        const databaseSdk = new AppwriteSDK.Database(client);
+        const databaseSdk = new AppwriteSDK.Databases(client);
 
-        const collectionsList = await AppwriteCall<CollectionsList, CollectionsList>(databaseSdk.listCollections());
-        if (collectionsList) {
-            const collectionTreeItems = collectionsList.collections.map((collection: Collection) => new CollectionTreeItem(collection, this)) ?? [];
+        const databaseList = await AppwriteCall<any>(databaseSdk.list());
+
+        if(databaseList) {
+            const databaseTreeItems = databaseList.databases.map((database: any) => new DatabaseTreeItem(database, this)) ?? [];
             const headerItem: vscode.TreeItem = {
-                label: `Total collections: ${collectionsList.sum}`,
+                label: `Total databases: ${databaseList.sum}`,
             };
-            return [headerItem, ...collectionTreeItems];
+            return [headerItem, ...databaseTreeItems];
         }
 
-        return [{ label: "No collections found" }];
+        // const collectionsList = await AppwriteCall<CollectionsList, CollectionsList>(databaseSdk.listCollections());
+        // if (collectionsList) {
+        //     const collectionTreeItems = collectionsList.collections.map((collection: Collection) => new CollectionTreeItem(collection, this)) ?? [];
+        //     const headerItem: vscode.TreeItem = {
+        //         label: `Total collections: ${collectionsList.sum}`,
+        //     };
+        //     return [headerItem, ...collectionTreeItems];
+        // }
+
+        return [{ label: "No databases found" }];
     }
 }

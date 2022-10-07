@@ -260,8 +260,13 @@ export type File = {
     sizeOriginal: number;
 };
 
+export type Database = {
+    $id: string;
+}
+
 export type Collection = {
     $id: string;
+    $database: string;
     $permissions: Permissions;
     name: string;
     dateCreated: number;
@@ -312,12 +317,13 @@ export type UsersClient = {
 };
 
 export type DatabaseClient = {
-    listCollections: () => Promise<any>;
-    listDocuments: (collectionId: string) => Promise<any>;
-    updateCollection: (collectionId: string, name: string, read: string[], write: string[], rules?: (Rule | CreatedRule)[]) => Promise<any>;
-    deleteCollection: (collectionId: string) => Promise<any>;
-    getCollection: (collectionId: string) => Promise<any>;
-    deleteDocument: (collectionId: string, documentId: string) => Promise<any>;
+    list: () => Promise<any>;
+    listCollections: (collectionDatabase: string) => Promise<any>;
+    listDocuments: (collectionDatabase: string, collectionId: string) => Promise<any>;
+    updateCollection: (collectionDatabase: string, collectionId: string, name: string, read: string[], write: string[], rules?: (Rule | CreatedRule)[]) => Promise<any>;
+    deleteCollection: (collectionDatabase: string, collectionId: string) => Promise<any>;
+    getCollection: (collectionDatabase: string, collectionId: string) => Promise<any>;
+    deleteDocument: (collectionDatabase: string, collectionId: string, documentId: string) => Promise<any>;
     createCollection: (name: string, read: string[], write: string[], rules: Rule[]) => Promise<any>;
 };
 
@@ -448,7 +454,7 @@ export type SDK = {
 
     Users: new (client: Client) => UsersClient;
     Health: new (client: Client) => HealthClient;
-    Database: new (client: Client) => DatabaseClient;
+    Databases: new (client: Client) => DatabaseClient;
     Storage: new (client: Client) => StorageClient;
     Functions: new (client: Client) => FunctionsClient;
 };

@@ -68,7 +68,7 @@ export async function createRuleWizard(collection: Collection): Promise<CreateRu
     let list: string[] | undefined = undefined;
 
     if (type === "document") {
-        const databaseSdk = new AppwriteSDK.Database(client);
+        const databaseSdk = new AppwriteSDK.Databases(client);
         const collectionsList = await AppwriteCall<CollectionsList, CollectionsList>(databaseSdk.listCollections());
 
         if (collectionsList === undefined) {

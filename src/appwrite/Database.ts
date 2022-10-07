@@ -6,19 +6,23 @@ export class Database {
     private readonly database: DatabaseClient;
 
     constructor(client: Client) {
-        this.database = new AppwriteSDK.Database(client);
+        this.database = new AppwriteSDK.Databases(client);
     }
 
-    public async getCollection(collectionId: string): Promise<Collection | undefined> {
-        return await AppwriteCall<Collection>(this.database.getCollection(collectionId));
+    public async list(): Promise<any> {
+        return await AppwriteCall<any>(this.database.list());
     }
 
-    public async deleteDocument(collectionId: string, documentId: string): Promise<void> {
-        await AppwriteCall(this.database.deleteDocument(collectionId, documentId));
+    public async getCollection(collectionDB: string, collectionId: string): Promise<Collection | undefined> {
+        return await AppwriteCall<Collection>(this.database.getCollection(collectionDB, collectionId));
     }
 
-    public async deleteCollection(collectionId: string): Promise<void> {
-        await AppwriteCall(this.database.deleteCollection(collectionId));
+    public async deleteDocument(collectionDB:string, collectionId: string, documentId: string): Promise<void> {
+        await AppwriteCall(this.database.deleteDocument(collectionDB, collectionId, documentId));
+    }
+
+    public async deleteCollection(collectionDB:string, collectionId: string): Promise<void> {
+        await AppwriteCall(this.database.deleteCollection(collectionDB, collectionId));
     }
 
     public async createCollection(collection: CreatedCollection): Promise<void> {
@@ -33,12 +37,12 @@ export class Database {
     }
 
     public async updatePermissions(collection: Collection, read: string[], write: string[]): Promise<void> {
-        await AppwriteCall(this.database.updateCollection(collection.$id, collection.name, read, write, collection.rules));
+        await AppwriteCall(this.database.updateCollection(collection.$database, collection.$id, collection.name, read, write, collection.rules));
     }
 
     public async createRule(collection: Collection, newRule: CreatedRule): Promise<void> {
         await AppwriteCall(
-            this.database.updateCollection(collection.$id, collection.name, collection.$permissions.read, collection.$permissions.write, [
+            this.database.updateCollection(collection.$database, collection.$id, collection.name, collection.$permissions.read, collection.$permissions.write, [
                 ...collection.rules,
                 newRule,
             ])
@@ -50,6 +54,7 @@ export class Database {
 
         await AppwriteCall(
             this.database.updateCollection(
+                collection.$database,
                 collection.$id,
                 collection.name,
                 collection.$permissions.read,

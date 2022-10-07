@@ -14,8 +14,8 @@ export class DocumentsTreeItem extends AppwriteTreeItemBase<CollectionTreeItem> 
     }
 
     public async getChildren(): Promise<TreeItem[]> {
-        const databaseSdk = new AppwriteSDK.Database(client);
-        const documentList = await AppwriteCall<DocumentsList>(databaseSdk.listDocuments(this.parent.collection.$id));
+        const databaseSdk = new AppwriteSDK.Databases(client);
+        const documentList = await AppwriteCall<DocumentsList>(databaseSdk.listDocuments(this.parent.collection.$database, this.parent.collection.$id));
         if (documentList === undefined) {
             return [];
         }

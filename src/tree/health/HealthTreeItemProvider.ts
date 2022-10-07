@@ -40,7 +40,7 @@ export class HealthTreeItemProvider implements vscode.TreeDataProvider<vscode.Tr
                     async () => {
                         try {
                             return await healthClient?.checkup();
-                        } catch (e) {
+                        } catch (e: any) {
                             ext.outputChannel?.append('Error: ' + e.message);
                             vscode.window.showErrorMessage('Could not connect to Appwrite project');
                         }
